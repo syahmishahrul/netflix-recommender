@@ -26,5 +26,10 @@ void Title::display() const {
     cout << "Title       : " << name << " (" << year << ")" << endl;
     cout << "Type        : " << type << endl;
     cout << "Rating      : " << rating << "/10" << endl;
+    if (original) {
+        cout << "Source      : Netflix Original" << endl;
+    } else {
+        cout << "Source      : Licensed from another studio" << endl;
+    }
     cout << "Description : " << description << endl;
 }

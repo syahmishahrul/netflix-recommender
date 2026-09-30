@@ -1,5 +1,6 @@
 #include "Catalogue.h"
 #include <fstream>
+#include <algorithm>
 
 bool Catalogue::loadFromFile(string fileName) {
     ifstream file(fileName);
@@ -59,5 +60,11 @@ vector<Title> Catalogue::findMatches(string genre, string type, double minRating
         }
         matches.push_back(t);
     }
+
+    // Highest rated first, like Netflix's "Top picks"
+    sort(matches.begin(), matches.end(), [](const Title& a, const Title& b) {
+        return a.getRating() > b.getRating();
+    });
+
     return matches;
 }

@@ -14,7 +14,9 @@ private:
     string genreFromChoice(int choice) const;
     string askType() const;
     double askMinRating() const;
-    void showRecommendations(string genre, string type, double minRating) const;
+    int askDisplayMode() const;
+    void showRecommendations(string genre, string type, double minRating,
+                             bool surpriseMe) const;
 
 public:
     // Returns 0 on success, 1 if the catalogue could not be loaded

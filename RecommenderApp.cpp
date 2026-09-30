@@ -1,8 +1,12 @@
 #include "RecommenderApp.h"
 #include <iostream>
 #include <iomanip>
+#include <cstdlib>
+#include <ctime>
 
 int RecommenderApp::run() {
+    srand(time(0));   // seed the random generator so "Surprise me" changes each run
+
     if (!catalogue.loadFromFile("netflix_titles.txt")) {
         cout << "Error: netflix_titles.txt not found." << endl;
         cout << "Make sure it is in the same folder as the program." << endl;
@@ -32,7 +36,13 @@ int RecommenderApp::run() {
         return 0;
     }
 
-    showRecommendations(genre, type, minRating);
+    int mode = askDisplayMode();
+    if (mode == -1) {
+        cout << "\nInvalid choice. Please run the program again and enter 1 or 2." << endl;
+        return 0;
+    }
+
+    showRecommendations(genre, type, minRating, mode == 2);
     return 0;
 }
 
@@ -117,7 +127,24 @@ double RecommenderApp::askMinRating() const {
     }
 }
 
-void RecommenderApp::showRecommendations(string genre, string type, double minRating) const {
+// Asks whether to list every match or pick one at random (-1 means invalid)
+int RecommenderApp::askDisplayMode() const {
+    cout << "\nHow should we show your results?" << endl;
+    cout << "1. Show all matches (highest rated first)" << endl;
+    cout << "2. Surprise me (one random pick)" << endl;
+    cout << "Enter your choice (1-2): ";
+
+    int choice;
+    cin >> choice;
+
+    if (choice == 1 || choice == 2) {
+        return choice;
+    }
+    return -1;
+}
+
+void RecommenderApp::showRecommendations(string genre, string type, double minRating,
+                                         bool surpriseMe) const {
     vector<Title> matches = catalogue.findMatches(genre, type, minRating);
 
     cout << "\n-----------------------------------------" << endl;
@@ -129,6 +156,17 @@ void RecommenderApp::showRecommendations(string genre, string type, double minRa
     }
 
     cout << fixed << setprecision(1);
+
+    // Surprise me: pick one random title from the matches
+    if (surpriseMe) {
+        int pick = rand() % matches.size();
+        cout << "Your surprise " << genre << " pick (1 of " << matches.size() << " matches):" << endl;
+        cout << "-----------------------------------------" << endl;
+        matches[pick].display();
+        cout << "-----------------------------------------" << endl;
+        return;
+    }
+
     cout << matches.size() << " Netflix " << genre << " title(s) for you";
     if (minRating > 0) {
         cout << " (rated " << minRating << "+)";
@@ -136,10 +174,15 @@ void RecommenderApp::showRecommendations(string genre, string type, double minRa
     cout << ":" << endl;
     cout << "-----------------------------------------" << endl;
 
+    int originals = 0;
     for (const Title& t : matches) {
         t.display();
         cout << endl;
+        if (t.isOriginal()) {
+            originals++;
+        }
     }
 
+    cout << originals << " of " << matches.size() << " are Netflix Originals." << endl;
     cout << "-----------------------------------------" << endl;
 }
