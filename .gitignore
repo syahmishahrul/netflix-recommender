@@ -1,3 +1,8 @@
 # Compiled program (each person builds their own)
 *.exe
 *.o
+recommender
+tests
+
+# Editor settings
+.vscode/
