@@ -1,0 +1,30 @@
+title|genre|type|year|rating|original|description
+Extraction|Action|Movie|2020|6.7|Y|A black-market mercenary is hired to rescue a crime lord's kidnapped son in Dhaka.
+Extraction 2|Action|Movie|2023|7.0|Y|Tyler Rake returns to free a gangster's family from a Georgian prison.
+The Gray Man|Action|Movie|2022|6.5|Y|A CIA operative is hunted across the globe after uncovering agency secrets.
+Red Notice|Action|Movie|2021|6.3|Y|An FBI profiler teams up with an art thief to catch a rival criminal.
+The Witcher|Action|Series|2019|8.0|Y|A monster hunter travels a continent where people are often worse than beasts.
+Arcane|Action|Series|2021|9.0|Y|Two sisters end up on opposite sides of a war between a rich city and its undercity.
+Murder Mystery|Comedy|Movie|2019|6.0|Y|A New York cop and his wife are framed for murder on a billionaire's yacht.
+Glass Onion: A Knives Out Mystery|Comedy|Movie|2022|7.1|Y|Detective Benoit Blanc solves a mystery on a tech billionaire's Greek island.
+Don't Look Up|Comedy|Movie|2021|7.2|Y|Two astronomers try to warn the world about a comet heading for Earth.
+Never Have I Ever|Comedy|Series|2020|7.8|Y|A teenager deals with high school, grief and crushes in California.
+Wednesday|Comedy|Series|2022|8.0|Y|Wednesday Addams investigates a murder mystery at Nevermore Academy.
+Friends|Comedy|Series|1994|8.9|N|Six friends navigate work, life and love in New York City.
+Hush|Horror|Movie|2016|6.6|Y|A deaf writer living alone in the woods is stalked by a masked killer.
+Bird Box|Horror|Movie|2018|6.6|Y|A mother and two children make a blindfolded journey to escape unseen creatures.
+Gerald's Game|Horror|Movie|2017|6.5|Y|A woman is left handcuffed to a bed in a remote house after a sudden tragedy.
+The Haunting of Hill House|Horror|Series|2018|8.6|Y|Siblings who grew up in a haunted mansion are forced to confront their past.
+Midnight Mass|Horror|Series|2021|7.7|Y|A charismatic priest's arrival brings miracles and dread to an isolated island.
+Kingdom|Horror|Series|2019|8.3|Y|A crown prince investigates a mysterious plague spreading across Joseon Korea.
+To All the Boys I've Loved Before|Romance|Movie|2018|7.0|Y|A teenager's secret love letters are mailed to all of her past crushes.
+Set It Up|Romance|Movie|2018|6.5|Y|Two overworked assistants scheme to set up their demanding bosses.
+The Kissing Booth|Romance|Movie|2018|5.9|Y|A teenager's summer romance with her best friend's older brother tests their friendship.
+Bridgerton|Romance|Series|2020|7.3|Y|Siblings of a powerful family search for love in Regency-era London.
+Emily in Paris|Romance|Series|2020|6.9|Y|An American marketing executive starts a new job and new life in Paris.
+Crash Landing on You|Romance|Series|2019|8.7|N|A South Korean heiress paraglides into North Korea and meets an army officer.
+Stranger Things|Sci-Fi|Series|2016|8.7|Y|Kids in a small town uncover secret experiments and a terrifying parallel world.
+Dark|Sci-Fi|Series|2017|8.7|Y|Four families in a German town uncover a time-travel mystery spanning generations.
+3 Body Problem|Sci-Fi|Series|2024|7.5|Y|A scientist's fateful decision in 1960s China echoes into the present day.
+The Adam Project|Sci-Fi|Movie|2022|6.7|Y|A time-travelling pilot teams up with his 12-year-old self to save the future.
+Interstellar|Sci-Fi|Movie|2014|8.7|N|Explorers travel through a wormhole to find humanity a new home.
