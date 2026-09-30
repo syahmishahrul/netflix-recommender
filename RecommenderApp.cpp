@@ -13,37 +13,65 @@ int RecommenderApp::run() {
         return 1;
     }
 
-    showMenu();
+    // Main loop: one recommendation per round until the user says no
+    bool again = true;
+    while (again) {
+        showMenu();
+        string genre = genreFromChoice(readChoice(1, 5));
 
-    int choice;
-    cin >> choice;
+        string type = askType();
+        double minRating = askMinRating();
+        int mode = askDisplayMode();
 
-    string genre = genreFromChoice(choice);
-    if (genre == "") {
-        cout << "\nInvalid choice. Please run the program again and enter a number between 1 and 5." << endl;
-        return 0;
+        showRecommendations(genre, type, minRating, mode == 2);
+
+        again = askYesNo("\nWould you like another recommendation? (y/n): ");
+        cout << endl;
     }
 
-    string type = askType();
-    if (type == "") {
-        cout << "\nInvalid choice. Please run the program again and enter a number between 1 and 3." << endl;
-        return 0;
-    }
-
-    double minRating = askMinRating();
-    if (minRating < 0) {
-        cout << "\nInvalid choice. Please run the program again and enter a number between 1 and 4." << endl;
-        return 0;
-    }
-
-    int mode = askDisplayMode();
-    if (mode == -1) {
-        cout << "\nInvalid choice. Please run the program again and enter 1 or 2." << endl;
-        return 0;
-    }
-
-    showRecommendations(genre, type, minRating, mode == 2);
+    cout << "Thanks for using the Netflix Recommendation Assistant. Enjoy your show!" << endl;
     return 0;
+}
+
+int RecommenderApp::readChoice(int min, int max) const {
+    int choice;
+    while (true) {
+        cin >> choice;
+
+        if (cin.eof()) {             // input ended (e.g. Ctrl+Z), stop cleanly
+            cout << endl;
+            exit(0);
+        }
+
+        if (cin.fail()) {            // user typed letters or symbols
+            cin.clear();             // reset the error state
+            cin.ignore(10000, '\n');  // throw away the bad input
+            cout << "Invalid input. Please enter a number between " << min << " and " << max << ": ";
+        } else if (choice < min || choice > max) {
+            cin.ignore(10000, '\n');
+            cout << "Invalid choice. Please enter a number between " << min << " and " << max << ": ";
+        } else {
+            cin.ignore(10000, '\n');  // clear anything extra typed after the number
+            return choice;
+        }
+    }
+}
+
+bool RecommenderApp::askYesNo(string question) const {
+    string answer;
+    while (true) {
+        cout << question;
+        if (!(cin >> answer)) {      // input ended, treat as "no"
+            return false;
+        }
+
+        if (answer == "y" || answer == "Y") {
+            return true;
+        } else if (answer == "n" || answer == "N") {
+            return false;
+        }
+        cout << "Please type y or n." << endl;
+    }
 }
 
 void RecommenderApp::showMenu() const {
@@ -60,7 +88,7 @@ void RecommenderApp::showMenu() const {
     cout << "Enter your choice (1-5): ";
 }
 
-// Turns the menu number into a genre name ("" means invalid)
+// Turns the menu number into a genre name
 string RecommenderApp::genreFromChoice(int choice) const {
     switch (choice) {
         case 1:
@@ -78,7 +106,7 @@ string RecommenderApp::genreFromChoice(int choice) const {
     }
 }
 
-// Asks movie or series ("" means invalid)
+// Asks movie or series
 string RecommenderApp::askType() const {
     cout << "\nMovie or series?" << endl;
     cout << "1. Movie" << endl;
@@ -86,10 +114,7 @@ string RecommenderApp::askType() const {
     cout << "3. Either" << endl;
     cout << "Enter your choice (1-3): ";
 
-    int choice;
-    cin >> choice;
-
-    switch (choice) {
+    switch (readChoice(1, 3)) {
         case 1:
             return "Movie";
         case 2:
@@ -101,7 +126,7 @@ string RecommenderApp::askType() const {
     }
 }
 
-// Asks for the lowest IMDb rating the user will accept (-1 means invalid)
+// Asks for the lowest IMDb rating the user will accept
 double RecommenderApp::askMinRating() const {
     cout << "\nMinimum IMDb rating?" << endl;
     cout << "1. Any rating" << endl;
@@ -110,10 +135,7 @@ double RecommenderApp::askMinRating() const {
     cout << "4. 8.0 and above" << endl;
     cout << "Enter your choice (1-4): ";
 
-    int choice;
-    cin >> choice;
-
-    switch (choice) {
+    switch (readChoice(1, 4)) {
         case 1:
             return 0.0;
         case 2:
@@ -127,20 +149,14 @@ double RecommenderApp::askMinRating() const {
     }
 }
 
-// Asks whether to list every match or pick one at random (-1 means invalid)
+// Asks whether to list every match (1) or pick one at random (2)
 int RecommenderApp::askDisplayMode() const {
     cout << "\nHow should we show your results?" << endl;
     cout << "1. Show all matches (highest rated first)" << endl;
     cout << "2. Surprise me (one random pick)" << endl;
     cout << "Enter your choice (1-2): ";
 
-    int choice;
-    cin >> choice;
-
-    if (choice == 1 || choice == 2) {
-        return choice;
-    }
-    return -1;
+    return readChoice(1, 2);
 }
 
 void RecommenderApp::showRecommendations(string genre, string type, double minRating,

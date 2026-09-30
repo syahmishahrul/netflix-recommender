@@ -10,6 +10,11 @@ class RecommenderApp {
 private:
     Catalogue catalogue;
 
+    // Keeps asking until the user types a whole number from min to max
+    int readChoice(int min, int max) const;
+    // Keeps asking until the user types y or n
+    bool askYesNo(string question) const;
+
     void showMenu() const;
     string genreFromChoice(int choice) const;
     string askType() const;

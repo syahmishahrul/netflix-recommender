@@ -1,5 +1,7 @@
 #include "Catalogue.h"
 #include <fstream>
+#include <iostream>
+#include <stdexcept>
 #include <algorithm>
 
 bool Catalogue::loadFromFile(string fileName) {
@@ -10,8 +12,10 @@ bool Catalogue::loadFromFile(string fileName) {
 
     string line;
     getline(file, line);   // skip the header line
+    int lineNumber = 1;
 
     while (getline(file, line)) {
+        lineNumber++;
         // Remove the hidden '\r' that Windows adds at the end of each line
         if (!line.empty() && line[line.size() - 1] == '\r') {
             line.erase(line.size() - 1);
@@ -19,7 +23,14 @@ bool Catalogue::loadFromFile(string fileName) {
         if (line.empty()) {
             continue;
         }
-        titles.push_back(parseLine(line));
+
+        // A badly formatted line is skipped instead of crashing the program
+        try {
+            titles.push_back(parseLine(line));
+        } catch (...) {
+            cout << "Warning: skipped badly formatted line " << lineNumber
+                 << " in " << fileName << endl;
+        }
     }
 
     file.close();
@@ -36,6 +47,10 @@ Title Catalogue::parseLine(string line) const {
         } else {
             field[f] += c;
         }
+    }
+
+    if (f != 6) {
+        throw runtime_error("wrong number of fields");
     }
 
     return Title(field[0], field[1], field[2], stoi(field[3]),
