@@ -12,7 +12,9 @@ private:
 
     void showMenu() const;
     string genreFromChoice(int choice) const;
-    void showRecommendations(string genre) const;
+    string askType() const;
+    double askMinRating() const;
+    void showRecommendations(string genre, string type, double minRating) const;
 
 public:
     // Returns 0 on success, 1 if the catalogue could not be loaded

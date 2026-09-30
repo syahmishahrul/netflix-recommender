@@ -45,12 +45,19 @@ int Catalogue::size() const {
     return titles.size();
 }
 
-vector<Title> Catalogue::findByGenre(string genre) const {
+vector<Title> Catalogue::findMatches(string genre, string type, double minRating) const {
     vector<Title> matches;
     for (const Title& t : titles) {
-        if (t.getGenre() == genre) {
-            matches.push_back(t);
+        if (t.getGenre() != genre) {
+            continue;                       // wrong genre
         }
+        if (type != "Any" && t.getType() != type) {
+            continue;                       // user wanted only movies or only series
+        }
+        if (t.getRating() < minRating) {
+            continue;                       // rating too low
+        }
+        matches.push_back(t);
     }
     return matches;
 }
