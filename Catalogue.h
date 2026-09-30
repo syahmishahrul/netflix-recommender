@@ -1,3 +1,4 @@
+// Catalogue.h - declares the Catalogue class (the list of all titles)
 #ifndef CATALOGUE_H
 #define CATALOGUE_H
 

@@ -1,3 +1,4 @@
+// Title.h - declares the Title class (one Netflix movie or series)
 #ifndef TITLE_H
 #define TITLE_H
 

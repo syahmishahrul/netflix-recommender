@@ -1,9 +1,11 @@
+// RecommenderApp.cpp - menus, input validation and showing recommendations
 #include "RecommenderApp.h"
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
 #include <ctime>
 
+// Loads the catalogue, then repeats: ask questions -> show results -> ask again?
 int RecommenderApp::run() {
     srand(time(0));   // seed the random generator so "Surprise me" changes each run
 
@@ -33,6 +35,7 @@ int RecommenderApp::run() {
     return 0;
 }
 
+// Reads a menu number; re-asks on letters or out-of-range numbers
 int RecommenderApp::readChoice(int min, int max) const {
     int choice;
     while (true) {
@@ -57,6 +60,7 @@ int RecommenderApp::readChoice(int min, int max) const {
     }
 }
 
+// Returns true for y/Y, false for n/N; re-asks on anything else
 bool RecommenderApp::askYesNo(string question) const {
     string answer;
     while (true) {
@@ -74,6 +78,7 @@ bool RecommenderApp::askYesNo(string question) const {
     }
 }
 
+// Prints the title banner and the genre menu
 void RecommenderApp::showMenu() const {
     cout << "=========================================" << endl;
     cout << "   NETFLIX MOVIE RECOMMENDATION ASSISTANT" << endl;
@@ -102,7 +107,7 @@ string RecommenderApp::genreFromChoice(int choice) const {
         case 5:
             return "Sci-Fi";
         default:
-            return "";
+            return "";   // never reached: readChoice only allows 1-5
     }
 }
 
@@ -159,6 +164,7 @@ int RecommenderApp::askDisplayMode() const {
     return readChoice(1, 2);
 }
 
+// Filters the catalogue and prints either all matches or one random pick
 void RecommenderApp::showRecommendations(string genre, string type, double minRating,
                                          bool surpriseMe) const {
     vector<Title> matches = catalogue.findMatches(genre, type, minRating);

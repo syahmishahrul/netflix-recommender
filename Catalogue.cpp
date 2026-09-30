@@ -1,9 +1,11 @@
+// Catalogue.cpp - loads netflix_titles.txt and searches it
 #include "Catalogue.h"
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
 #include <algorithm>
 
+// Reads every line of the catalogue file into the titles vector
 bool Catalogue::loadFromFile(string fileName) {
     ifstream file(fileName);
     if (!file) {
@@ -37,6 +39,8 @@ bool Catalogue::loadFromFile(string fileName) {
     return true;
 }
 
+// Splits one line like "Hush|Horror|Movie|2016|6.6|Y|..." into a Title.
+// Throws an error if the line is badly formatted.
 Title Catalogue::parseLine(string line) const {
     // Split the line at each '|' into 7 fields
     string field[7];
@@ -57,10 +61,12 @@ Title Catalogue::parseLine(string line) const {
                  stod(field[4]), field[5] == "Y", field[6]);
 }
 
+// Number of titles successfully loaded
 int Catalogue::size() const {
     return titles.size();
 }
 
+// Keeps only the titles that pass all three filters
 vector<Title> Catalogue::findMatches(string genre, string type, double minRating) const {
     vector<Title> matches;
     for (const Title& t : titles) {

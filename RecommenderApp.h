@@ -1,3 +1,4 @@
+// RecommenderApp.h - declares the RecommenderApp class (menus and program flow)
 #ifndef RECOMMENDERAPP_H
 #define RECOMMENDERAPP_H
 
