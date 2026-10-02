@@ -19,13 +19,19 @@ int RecommenderApp::run() {
     bool again = true;
     while (again) {
         showMenu();
-        string genre = genreFromChoice(readChoice(1, 5));
+        int choice = readChoice(1, 6);
 
-        string type = askType();
-        double minRating = askMinRating();
-        int mode = askDisplayMode();
+        if (choice == 6) {
+            searchByTitle();
+        } else {
+            string genre = genreFromChoice(choice);
 
-        showRecommendations(genre, type, minRating, mode);
+            string type = askType();
+            double minRating = askMinRating();
+            int mode = askDisplayMode();
+
+            showRecommendations(genre, type, minRating, mode);
+        }
 
         again = askYesNo("\nWould you like another recommendation? (y/n): ");
         cout << endl;
@@ -90,7 +96,39 @@ void RecommenderApp::showMenu() const {
     cout << "3. Horror" << endl;
     cout << "4. Romance" << endl;
     cout << "5. Sci-Fi" << endl;
-    cout << "Enter your choice (1-5): ";
+    cout << "6. Search by title" << endl;
+    cout << "Enter your choice (1-6): ";
+}
+
+// Asks for part of a title and shows every title that contains it
+void RecommenderApp::searchByTitle() const {
+    string keyword;
+    cout << "\nType part of a title: ";
+    while (true) {
+        if (!getline(cin, keyword)) {    // input ended, stop cleanly
+            cout << endl;
+            exit(0);
+        }
+        if (keyword != "") {
+            break;
+        }
+        cout << "Please type at least one letter: ";
+    }
+
+    vector<Title> matches = catalogue.searchByName(keyword);
+
+    cout << "\n-----------------------------------------" << endl;
+    if (matches.empty()) {
+        cout << "No titles found for \"" << keyword << "\"." << endl;
+    } else {
+        cout << matches.size() << " title(s) found for \"" << keyword << "\":" << endl;
+        cout << "-----------------------------------------" << endl;
+        for (const Title& t : matches) {
+            t.display();
+            cout << endl;
+        }
+    }
+    cout << "-----------------------------------------" << endl;
 }
 
 // Turns the menu number into a genre name
@@ -107,7 +145,7 @@ string RecommenderApp::genreFromChoice(int choice) const {
         case 5:
             return "Sci-Fi";
         default:
-            return "";   // never reached: readChoice only allows 1-5
+            return "";   // never reached: 6 is handled before this is called
     }
 }
 

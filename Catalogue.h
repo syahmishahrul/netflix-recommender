@@ -26,6 +26,9 @@ public:
     // If originalsOnly is true, only Netflix Originals are returned.
     vector<Title> findMatches(string genre, string type, double minRating,
                               bool originalsOnly = false) const;
+
+    // Returns all titles whose name contains the keyword (not case-sensitive)
+    vector<Title> searchByName(string keyword) const;
 };
 
 #endif

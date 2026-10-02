@@ -4,6 +4,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <algorithm>
+#include <cctype>
 
 // Reads every line of the catalogue file into the titles vector
 bool Catalogue::loadFromFile(string fileName) {
@@ -59,6 +60,26 @@ Title Catalogue::parseLine(string line) const {
 
     return Title(field[0], field[1], field[2], stoi(field[3]),
                  stod(field[4]), field[5] == "Y", field[6]);
+}
+
+// Returns a lowercase copy of text, so "STRANGER" and "stranger" compare equal
+static string toLower(string text) {
+    for (char& c : text) {
+        c = tolower(static_cast<unsigned char>(c));
+    }
+    return text;
+}
+
+// Keeps every title whose name contains the keyword
+vector<Title> Catalogue::searchByName(string keyword) const {
+    vector<Title> matches;
+    string key = toLower(keyword);
+    for (const Title& t : titles) {
+        if (toLower(t.getName()).find(key) != string::npos) {
+            matches.push_back(t);
+        }
+    }
+    return matches;
 }
 
 // Number of titles successfully loaded

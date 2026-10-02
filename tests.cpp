@@ -114,6 +114,11 @@ int main() {
     check("T13 Originals only returns only Netflix Originals",
           allOriginal && rOrig.size() == 2, "got " + to_string(rOrig.size()));
 
+    // Search by title
+    check("T14 Search 'EXTRACTION' finds 2 titles (not case-sensitive)",
+          catalogue.searchByName("EXTRACTION").size() == 2);
+    check("T15 Search 'zzz' finds nothing", catalogue.searchByName("zzz").empty());
+
     // Test 11: missing file
     Catalogue missing;
     check("T11 Missing file returns false",
@@ -141,13 +146,13 @@ int main() {
     // Test 7: letters at the genre menu, then a valid choice
     string out7 = runApp("abc\n3\n3\n1\n1\nn\n");
     check("T7  Letters rejected and re-asked",
-          contains(out7, "Invalid input. Please enter a number between 1 and 5:")
+          contains(out7, "Invalid input. Please enter a number between 1 and 6:")
           && contains(out7, "Netflix Horror title(s)"));
 
     // Test 8: out-of-range number, then a valid choice
     string out8 = runApp("9\n3\n3\n1\n1\nn\n");
     check("T8  Out-of-range number rejected and re-asked",
-          contains(out8, "Invalid choice. Please enter a number between 1 and 5:")
+          contains(out8, "Invalid choice. Please enter a number between 1 and 6:")
           && contains(out8, "Netflix Horror title(s)"));
 
     // Test 9: invalid answer to the y/n question
@@ -160,6 +165,12 @@ int main() {
     check("T10 'y' starts a second round, 'n' exits",
           contains(out10, "Netflix Horror title(s)") && contains(out10, "Interstellar (2014)")
           && contains(out10, "Thanks for using"));
+
+    // Search from the menu (option 6), including an empty entry first
+    string outSearch = runApp("6\n\nstranger\nn\n");
+    check("T16 Menu option 6 searches by title",
+          contains(outSearch, "Please type at least one letter")
+          && contains(outSearch, "Stranger Things (2016)"));
 
     // Test 5: Surprise me - 10 rounds in one run should not all pick the same title
     string rounds = "";

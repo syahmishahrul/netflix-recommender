@@ -17,6 +17,7 @@ private:
     bool askYesNo(string question) const;
 
     void showMenu() const;
+    void searchByTitle() const;
     string genreFromChoice(int choice) const;
     string askType() const;
     double askMinRating() const;
