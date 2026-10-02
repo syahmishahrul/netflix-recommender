@@ -3,6 +3,7 @@
 #define RECOMMENDERAPP_H
 
 #include "Catalogue.h"
+#include "Watchlist.h"
 #include <string>
 using namespace std;
 
@@ -10,6 +11,7 @@ using namespace std;
 class RecommenderApp {
 private:
     Catalogue catalogue;
+    Watchlist watchlist;   // surprise picks from this session
 
     // Keeps asking until the user types a whole number from min to max
     int readChoice(int min, int max) const;
@@ -23,7 +25,7 @@ private:
     double askMinRating() const;
     int askDisplayMode() const;
     void showRecommendations(string genre, string type, double minRating,
-                             int mode) const;
+                             int mode);
 
 public:
     // Returns 0 on success, 1 if the catalogue could not be loaded

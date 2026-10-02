@@ -37,6 +37,18 @@ int RecommenderApp::run() {
         cout << endl;
     }
 
+    // Show and save the watchlist if any surprise picks were made
+    if (watchlist.size() > 0) {
+        cout << "Your watchlist this session:" << endl;
+        watchlist.display();
+        if (watchlist.saveToFile("watchlist.txt")) {
+            cout << "Saved to watchlist.txt" << endl;
+        } else {
+            cout << "Warning: could not save watchlist.txt" << endl;
+        }
+        cout << endl;
+    }
+
     cout << "Thanks for using the Netflix Recommendation Assistant. Enjoy your show!" << endl;
     return 0;
 }
@@ -206,7 +218,7 @@ int RecommenderApp::askDisplayMode() const {
 
 // Filters the catalogue and prints either all matches or one random pick
 void RecommenderApp::showRecommendations(string genre, string type, double minRating,
-                                         int mode) const {
+                                         int mode) {
     bool surpriseMe = (mode == 2);
     bool originalsOnly = (mode == 3);
     vector<Title> matches = catalogue.findMatches(genre, type, minRating, originalsOnly);
@@ -230,6 +242,8 @@ void RecommenderApp::showRecommendations(string genre, string type, double minRa
         cout << "Your surprise " << genre << " pick (1 of " << matches.size() << " matches):" << endl;
         cout << "-----------------------------------------" << endl;
         matches[pick].display();
+        watchlist.add(matches[pick]);
+        cout << "Added to your watchlist." << endl;
         cout << "-----------------------------------------" << endl;
         return;
     }

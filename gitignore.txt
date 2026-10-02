@@ -1,0 +1,11 @@
+# Compiled program (each person builds their own)
+*.exe
+*.o
+recommender
+tests
+
+# Editor settings
+.vscode/
+
+# User's saved picks (created when the program runs)
+watchlist.txt

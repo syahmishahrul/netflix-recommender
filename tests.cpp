@@ -205,6 +205,9 @@ int main() {
     check("T5  Surprise me picks different titles across 10 rounds",
           contains(out5, "Your surprise Action pick") && picks.size() > 1,
           to_string(picks.size()) + " different titles");
+    check("T19 Surprise picks are added to and saved from the watchlist",
+          contains(out5, "Added to your watchlist.") && contains(out5, "Saved to watchlist.txt"));
+    remove("watchlist.txt");   // clean up the file the test run created
 
     cout << "\n" << passed << " passed, " << failed << " failed" << endl;
     return failed == 0 ? 0 : 1;
