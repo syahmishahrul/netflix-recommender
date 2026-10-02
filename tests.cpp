@@ -1,7 +1,7 @@
 // tests.cpp - automated tests for the Netflix Movie Recommendation Assistant
 //
 // Build and run (from the project folder):
-//   g++ tests.cpp Title.cpp Catalogue.cpp RecommenderApp.cpp -o tests.exe
+//   g++ tests.cpp Title.cpp Catalogue.cpp RecommenderApp.cpp Watchlist.cpp -o tests.exe
 //   .\tests.exe
 //
 // Two kinds of tests:
@@ -10,6 +10,7 @@
 //                      for text streams, then check the printed output.
 #include "Catalogue.h"
 #include "RecommenderApp.h"
+#include "Watchlist.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -118,6 +119,20 @@ int main() {
     check("T14 Search 'EXTRACTION' finds 2 titles (not case-sensitive)",
           catalogue.searchByName("EXTRACTION").size() == 2);
     check("T15 Search 'zzz' finds nothing", catalogue.searchByName("zzz").empty());
+
+    // Watchlist: adding titles and saving them to a file
+    Watchlist wl;
+    wl.add(r1[0]);
+    wl.add(r1[1]);
+    check("T17 Watchlist holds 2 titles after adding 2", wl.size() == 2);
+    bool saved = wl.saveToFile("test_watchlist.txt");
+    ifstream savedFile("test_watchlist.txt");
+    string firstLine;
+    getline(savedFile, firstLine);
+    savedFile.close();
+    remove("test_watchlist.txt");
+    check("T18 Watchlist saves titles to a file",
+          saved && firstLine == "The Haunting of Hill House (2018) - Horror", "first line: " + firstLine);
 
     // Test 11: missing file
     Catalogue missing;

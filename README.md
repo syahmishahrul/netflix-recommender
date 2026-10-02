@@ -44,6 +44,7 @@ The program reflects two parts of that story:
 |---|---|---|
 | `Title.h/.cpp` | `Title` | One movie or series; private data with getters and `display()` |
 | `Catalogue.h/.cpp` | `Catalogue` | Loads the catalogue file and searches it with `findMatches()` |
+| `Watchlist.h/.cpp` | `Watchlist` | Keeps the session's picks, shows them and saves them to `watchlist.txt` |
 | `RecommenderApp.h/.cpp` | `RecommenderApp` | Menus, input validation, program loop, printing results |
 | `main.cpp` | none | Creates the app and calls `run()` |
 | `netflix_titles.txt` | none | The catalogue data |
@@ -53,7 +54,7 @@ The program reflects two parts of that story:
 Requires a C++11 compiler (e.g. g++ from MinGW-w64).
 
 ```
-g++ main.cpp Title.cpp Catalogue.cpp RecommenderApp.cpp -o recommender.exe
+g++ main.cpp Title.cpp Catalogue.cpp RecommenderApp.cpp Watchlist.cpp -o recommender.exe
 .\recommender.exe
 ```
 

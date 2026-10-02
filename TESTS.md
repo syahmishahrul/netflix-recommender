@@ -6,7 +6,7 @@
 (it replaces `main.cpp` in the build, since it has its own `main`):
 
 ```
-g++ tests.cpp Title.cpp Catalogue.cpp RecommenderApp.cpp -o tests.exe
+g++ tests.cpp Title.cpp Catalogue.cpp RecommenderApp.cpp Watchlist.cpp -o tests.exe
 .\tests.exe
 ```
 
