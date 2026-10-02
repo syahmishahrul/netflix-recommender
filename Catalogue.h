@@ -23,7 +23,9 @@ public:
 
     // Returns all titles that match the genre, type and minimum rating.
     // type can be "Movie", "Series" or "Any". Sorted highest rating first.
-    vector<Title> findMatches(string genre, string type, double minRating) const;
+    // If originalsOnly is true, only Netflix Originals are returned.
+    vector<Title> findMatches(string genre, string type, double minRating,
+                              bool originalsOnly = false) const;
 };
 
 #endif

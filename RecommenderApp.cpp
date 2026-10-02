@@ -25,7 +25,7 @@ int RecommenderApp::run() {
         double minRating = askMinRating();
         int mode = askDisplayMode();
 
-        showRecommendations(genre, type, minRating, mode == 2);
+        showRecommendations(genre, type, minRating, mode);
 
         again = askYesNo("\nWould you like another recommendation? (y/n): ");
         cout << endl;
@@ -154,24 +154,31 @@ double RecommenderApp::askMinRating() const {
     }
 }
 
-// Asks whether to list every match (1) or pick one at random (2)
+// Asks whether to list every match (1), pick one at random (2)
+// or list Netflix Originals only (3)
 int RecommenderApp::askDisplayMode() const {
     cout << "\nHow should we show your results?" << endl;
     cout << "1. Show all matches (highest rated first)" << endl;
     cout << "2. Surprise me (one random pick)" << endl;
-    cout << "Enter your choice (1-2): ";
+    cout << "3. Netflix Originals only" << endl;
+    cout << "Enter your choice (1-3): ";
 
-    return readChoice(1, 2);
+    return readChoice(1, 3);
 }
 
 // Filters the catalogue and prints either all matches or one random pick
 void RecommenderApp::showRecommendations(string genre, string type, double minRating,
-                                         bool surpriseMe) const {
-    vector<Title> matches = catalogue.findMatches(genre, type, minRating);
+                                         int mode) const {
+    bool surpriseMe = (mode == 2);
+    bool originalsOnly = (mode == 3);
+    vector<Title> matches = catalogue.findMatches(genre, type, minRating, originalsOnly);
 
     cout << "\n-----------------------------------------" << endl;
     if (matches.empty()) {
         cout << "Sorry, no " << genre << " titles match your filters." << endl;
+        if (originalsOnly) {
+            cout << "(Only Netflix Originals were included.)" << endl;
+        }
         cout << "Try choosing \"Either\" or a lower minimum rating." << endl;
         cout << "-----------------------------------------" << endl;
         return;

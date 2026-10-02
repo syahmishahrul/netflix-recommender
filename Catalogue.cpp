@@ -67,7 +67,8 @@ int Catalogue::size() const {
 }
 
 // Keeps only the titles that pass all three filters
-vector<Title> Catalogue::findMatches(string genre, string type, double minRating) const {
+vector<Title> Catalogue::findMatches(string genre, string type, double minRating,
+                                     bool originalsOnly) const {
     vector<Title> matches;
     for (const Title& t : titles) {
         if (t.getGenre() != genre) {
@@ -78,6 +79,9 @@ vector<Title> Catalogue::findMatches(string genre, string type, double minRating
         }
         if (t.getRating() < minRating) {
             continue;                       // rating too low
+        }
+        if (originalsOnly && !t.isOriginal()) {
+            continue;                       // user wanted Netflix Originals only
         }
         matches.push_back(t);
     }

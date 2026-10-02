@@ -103,6 +103,17 @@ int main() {
     vector<Title> r6 = catalogue.findMatches("Horror", "Movie", 8.0);
     check("T6  Horror/Movie/8.0+ gives no titles", r6.empty());
 
+    // Originals only: every result must be a Netflix Original
+    vector<Title> rOrig = catalogue.findMatches("Romance", "Series", 0.0, true);
+    bool allOriginal = !rOrig.empty();
+    for (const Title& t : rOrig) {
+        if (!t.isOriginal()) {
+            allOriginal = false;
+        }
+    }
+    check("T13 Originals only returns only Netflix Originals",
+          allOriginal && rOrig.size() == 2, "got " + to_string(rOrig.size()));
+
     // Test 11: missing file
     Catalogue missing;
     check("T11 Missing file returns false",

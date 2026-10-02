@@ -22,7 +22,7 @@ private:
     double askMinRating() const;
     int askDisplayMode() const;
     void showRecommendations(string genre, string type, double minRating,
-                             bool surpriseMe) const;
+                             int mode) const;
 
 public:
     // Returns 0 on success, 1 if the catalogue could not be loaded
